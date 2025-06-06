@@ -33,7 +33,15 @@ function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;alpha_sd =4.0,beta_sd 
             k[i,j] = sum(Y[:,i] .* Y[:,j])
         end
     end
-    params = Xs,k, n_obs,n_sample, vec(sum(Y, dims = 1))
+
+    n_X = length(Xs)
+    X_dims = size(X)[1]
+    X_3D = Array{Float64}(undef,n_X,X_dims...)
+    for i in 1:n_X
+        X_3D[i,:,:] .= Xs[i]
+    end
+
+    params = X_3D,k, n_obs,n_sample, vec(sum(Y, dims = 1))
 
     inference_model = regression(params...;priors =[alpha_sd,beta_sd,lambda_sd])
     Turing.sample(inference_model, NUTS(n_adapts,delta; adtype=ADTypes.AutoMooncake(config=nothing)),n_iter)
