@@ -25,7 +25,7 @@ end
 # User facing methods
 
 # vector of X arrays
-function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65)
+function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;drop_lambda=false,alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65)
     n_sample, n_obs = size(Y)
     k = zeros(Int64, n_obs,n_obs)
     for i in 2:n_obs
@@ -35,7 +35,7 @@ function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;alpha_sd =4.0,beta_sd 
     end
 
     n_X = length(Xs)
-    X_dims = size(X)[1]
+    X_dims = size(Xs[1])
     X_3D = Array{Float64}(undef,n_X,X_dims...)
     for i in 1:n_X
         X_3D[i,:,:] .= Xs[i]
@@ -44,10 +44,12 @@ function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;alpha_sd =4.0,beta_sd 
     params = X_3D,k, n_obs,n_sample, vec(sum(Y, dims = 1))
 
     inference_model = regression(params...;priors =[alpha_sd,beta_sd,lambda_sd])
-    Turing.sample(inference_model, NUTS(n_adapts,delta; adtype=ADTypes.AutoMooncake(config=nothing)),n_iter)
+    chn = Turing.sample(inference_model, NUTS(n_adapts,delta; adtype=ADTypes.AutoMooncake(config=nothing)),n_iter)
+    
+    drop_lambda ? chn[["α",["β[$(i)]" for i in 1:n_X]...]] : chn
 end
 
 # single X array
-function cooccurrence_regression(X,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65) 
-    cooccurrence_regression([X],Y,n_iter;alpha_sd,beta_sd,lambda_sd,n_adapts,delta)
+function cooccurrence_regression(X,Y,n_iter=1000;drop_lambda=false,alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65) 
+    cooccurrence_regression([X],Y,n_iter;drop_lambda,alpha_sd,beta_sd,lambda_sd,n_adapts,delta)
 end
