@@ -22,7 +22,10 @@
     Turing.@addlogprob! lp
 end
 
-function cooccurrence_regression(Xs,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65)
+# User facing methods
+
+# vector of X arrays
+function cooccurrence_regression(Xs::Vector,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65)
     n_sample, n_obs = size(Y)
     k = zeros(Int64, n_obs,n_obs)
     for i in 2:n_obs
@@ -33,5 +36,10 @@ function cooccurrence_regression(Xs,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,la
     params = Xs,k, n_obs,n_sample, vec(sum(Y, dims = 1))
 
     inference_model = regression(params...;priors =[alpha_sd,beta_sd,lambda_sd])
-    ample(inference_model, NUTS(n_adapts,delta; adtype=ADTypes.AutoMooncake(config=nothing)))
+    Turing.sample(inference_model, NUTS(n_adapts,delta; adtype=ADTypes.AutoMooncake(config=nothing)),n_iter)
+end
+
+# single X array
+function cooccurrence_regression(X,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65) 
+    cooccurrence_regression([X],Y,n_iter=n_iter;alpha_sd =alpha_sd,beta_sd = beta_sd,lambda_sd,n_adapts,delta)
 end
