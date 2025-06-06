@@ -41,5 +41,5 @@ end
 
 # single X array
 function cooccurrence_regression(X,Y,n_iter=1000;alpha_sd =4.0,beta_sd = 1.0,lambda_sd =1.0,n_adapts=100,delta=0.65) 
-    cooccurrence_regression([X],Y,n_iter=n_iter;alpha_sd =alpha_sd,beta_sd = beta_sd,lambda_sd,n_adapts,delta)
+    cooccurrence_regression([X],Y,n_iter;alpha_sd,beta_sd,lambda_sd,n_adapts,delta)
 end
