@@ -3,6 +3,14 @@ uuid = "b11753cd-0d5a-47ad-8b8f-99db3fa4a09b"
 authors = ["Arthur <arn203@exeter.ac.uk> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Memoization = "6fafb56a-5788-4b4e-91ca-c0cea6611c73"
+Mooncake = "da2b9cff-9c12-43a0-ae48-6db2b0edb7d6"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
+
 [compat]
 julia = "1.10.4"
 
