@@ -33,4 +33,4 @@ The returned `Chains` contains posterior samples for the intercept $\alpha$, reg
 
 The current implementation depends on [`Turing.jl`](https://turinglang.org/) and [`Mooncake.jl`](https://chalk-lab.github.io/Mooncake.jl/stable/), which are heavy dependencies. I aim to streamline the package in the near future.
 
-Depending on the level of interest, I will include additional model structures and options e.g. hierarchical models and splines.
+Depending on the level of interest I will include additional model structures and options e.g. hierarchical models and splines.
