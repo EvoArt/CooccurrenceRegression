@@ -1,6 +1,6 @@
 module CooccurrenceRegression
 
-using MoonCake,Reexport
+using Mooncake,Reexport
 
 @reexport using Turing
 
