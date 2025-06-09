@@ -1,7 +1,7 @@
 name = "CooccurrenceRegression"
 uuid = "b11753cd-0d5a-47ad-8b8f-99db3fa4a09b"
 authors = ["Arthur <arn203@exeter.ac.uk>"]
-version = "0.0.1"
+version = "0.0.2"
 
 [deps]
 ADTypes = "47edcb42-4c32-4615-8424-f2b9edc5f35b"

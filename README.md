@@ -27,10 +27,34 @@ cooccurrence_regression(
 )
 ```
 
+Alternatively, there is the hierarchical model structure:
+
+```{julia}
+cooccurrence_regression(
+    X,                      MxM array of dyadic explanatory variables e.g. a distance matrix 
+    Y,                      NxM Presence absence matrix with rows of sites and columns of species
+    g,                      Vector of length M denoting the group for each species
+    n_iter=1000;            Number of MCMC samples
+    drop_lambda=false,      Whether to drop the random intercept parameters from the returned chain
+    alpha_sd =4.0,          Standard deviation for the Gaussian prior for the global intercept
+    lambda_sd =1.0,         Standard deviation for the Gaussian prior for the random intercepts
+    mu_sd =1.0,             Standard deviation for the Gaussian hyper prior for regression coefficients
+    sigma_params =(2.0,0.1),Parameters for the standard deviation of hyper prior for coefficients
+    n_adapts=100,           Number of adaptation samples for the NUTS inference algorithm
+    delta=0.65              Target acceptance rate for the NUTS inference algorithm
+)
+
+cooccurrence_regression(
+    Xs,                     Vector of MxM arrays of dyadic explanatory variables e.g. distance matrices
+    Y,                      NxM Presence absence matrix with rows of sites and columns of species
+    g,                      Vector of length M denoting the group for each species 
+    "
+    "
+)
+```
+
 The returned `Chains` contains posterior samples for the intercept $\alpha$, regression coefficients for each explanatory variable in the order they are supplied $\beta$[i] and each species-level random intercept $\lambda$[i] in the order they appear in the presence absence matrix.
 
 ### Future plans
 
 The current implementation depends on [`Turing.jl`](https://turinglang.org/) and [`Mooncake.jl`](https://chalk-lab.github.io/Mooncake.jl/stable/), which are heavy dependencies. I aim to streamline the package in the near future.
-
-Depending on the level of interest I will include additional model structures and options e.g. hierarchical models and splines.
