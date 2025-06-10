@@ -10,10 +10,10 @@ Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
 
 [compat]
-Mooncake = ">= 0.3"
-Reexport = ">= 1.0"
-ADTypes = ">= 1.0"
-Turing = ">= 0.30"
+Mooncake = "0.3 - 0.4"
+Reexport = "1.0 - 2.0"
+ADTypes = "1.0 - 2.0"
+Turing = "0.30 - 0.50"
 julia = "1.10.4"
 
 [extras]
